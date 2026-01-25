@@ -87,10 +87,7 @@ Either nil (not run), `running', `success', or `failed'.")
 (defun magit-pre-commit--project-root ()
   "Return the project root directory, or nil if not in a project."
   (when-let ((project (project-current)))
-    (if (fboundp 'project-root)
-        (project-root project)
-      ;; Fallback for older Emacs
-      (car (project-roots project)))))
+    (project-root project)))
 
 (defun magit-pre-commit--config-file ()
   "Return the path to .pre-commit-config.yaml, or nil if not found."
@@ -144,9 +141,9 @@ Either nil (not run), `running', `success', or `failed'.")
         (push (match-string 1) failed-hooks)))
     (nreverse failed-hooks)))
 
-(defun magit-pre-commit--sentinel (process event)
+(defun magit-pre-commit--sentinel (process _event)
   "Process sentinel for pre-commit PROCESS.
-EVENT is the process event string."
+_EVENT is the process event string (unused)."
   (let ((buf (process-buffer process))
         (exit-code (process-exit-status process)))
     (setq magit-pre-commit--process nil)
