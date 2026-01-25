@@ -380,7 +380,7 @@ To enable, add to your init file:
 ;;; --- Integration ---
 
 (defun magit-pre-commit--setup ()
-  "Set up magit-pre-commit integration."
+  "Set up `magit-pre-commit' integration."
   ;; Add keybinding to magit-mode-map for direct access from status buffer
   (define-key magit-mode-map magit-pre-commit-transient-prefix #'magit-pre-commit)
   ;; Add to magit-dispatch for discoverability
@@ -393,7 +393,7 @@ To enable, add to your init file:
                           'append))
 
 (defun magit-pre-commit--teardown ()
-  "Remove magit-pre-commit integration."
+  "Remove `magit-pre-commit' integration."
   ;; Remove keybinding from magit-mode-map
   (define-key magit-mode-map magit-pre-commit-transient-prefix nil)
   ;; Remove from magit-dispatch
