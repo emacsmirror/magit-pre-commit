@@ -32,9 +32,12 @@
 ;; - Install and update pre-commit hooks
 ;; - Status section showing running/failed hooks
 ;;
-;; The integration auto-activates when both conditions are met:
+;; The integration activates when both conditions are met:
 ;; - The `pre-commit' executable is available in PATH
 ;; - A `.pre-commit-config.yaml' file exists in the project root
+;;
+;; To enable, add to your init file:
+;;   (add-hook 'magit-mode-hook #'magit-pre-commit-mode)
 
 (require 'magit)
 (require 'yaml)
@@ -359,6 +362,20 @@ If HOOK is provided, run only that hook."
           (insert (propertize (format "  %s\n" hook) 'font-lock-face 'error)))
         (insert "\n")))))
 
+;;; --- Minor Mode ---
+
+;;;###autoload
+(define-minor-mode magit-pre-commit-mode
+  "Toggle Magit integration for pre-commit.
+
+To enable, add to your init file:
+  (add-hook \\='magit-mode-hook #\\='magit-pre-commit-mode)"
+  :global t
+  :group 'magit-pre-commit
+  (if magit-pre-commit-mode
+      (magit-pre-commit--setup)
+    (magit-pre-commit--teardown)))
+
 ;;; --- Integration ---
 
 (defun magit-pre-commit--setup ()
@@ -382,10 +399,6 @@ If HOOK is provided, run only that hook."
   (transient-remove-suffix 'magit-dispatch "@")
   ;; Remove status section hook
   (remove-hook 'magit-status-sections-hook #'magit-pre-commit--status-insert-section))
-
-;; Auto-setup when magit is loaded
-(with-eval-after-load 'magit
-  (magit-pre-commit--setup))
 
 ;;; --- Footer ---
 
