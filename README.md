@@ -6,12 +6,13 @@ Integrate [pre-commit](https://pre-commit.com/) into Magit. Press `@` from any m
 
 ## Installation
 
+Ensure you have [MELPA](https://melpa.org/#/getting-started) configured.
+
 ### Doom Emacs
 
 In `packages.el`:
 ```elisp
-(package! magit-pre-commit
-  :recipe (:host github :repo "DamianB-BitFlipper/magit-pre-commit.el"))
+(package! magit-pre-commit)
 ```
 
 In `config.el`:
@@ -24,7 +25,6 @@ In `config.el`:
 
 ```elisp
 (use-package magit-pre-commit
-  :straight (:host github :repo "DamianB-BitFlipper/magit-pre-commit.el")
   :after magit)
 ```
 
